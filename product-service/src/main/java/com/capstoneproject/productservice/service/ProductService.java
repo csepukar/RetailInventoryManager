@@ -40,25 +40,26 @@ public class ProductService {
     }
 
     public ProductResponse getProductById(Long id) {
-        return productRepository.findById(id).map(this::mapToProductResponse).get();
+        Optional<Product> productOpt = productRepository.findById(id);
+        return productOpt.isPresent() ? productOpt.map(this::mapToProductResponse).get() : null;
     }
 
-    public void updateProduct(Long id, ProductRequest productRequest){
+    public void updateProduct(Long id, ProductRequest productRequest) {
         Optional<Product> productOpt = productRepository.findById(id);
-        if(productOpt.isPresent()){
+        if (productOpt.isPresent()) {
             Product product = productOpt.map(popt ->
-                            Product.builder()
-                                .id(popt.getId())
-                                .title(productRequest.getTitle())
-                                .summary(productRequest.getSummary())
-                                .type(productRequest.getType())
-                                .content(productRequest.getContent())
-                                .createdBy(popt.getCreatedBy())
-                                .updatedBy("shyam") //change the name with the login credential
-                                .createdAt(popt.getCreatedAt())
-                                .updatedAt(LocalDateTime.now())
-                                    .build()
-                            ).get();
+                    Product.builder()
+                            .id(popt.getId())
+                            .title(productRequest.getTitle())
+                            .summary(productRequest.getSummary())
+                            .type(productRequest.getType())
+                            .content(productRequest.getContent())
+                            .createdBy(popt.getCreatedBy())
+                            .updatedBy("shyam") //change the name with the login credential
+                            .createdAt(popt.getCreatedAt())
+                            .updatedAt(LocalDateTime.now())
+                            .build()
+            ).get();
             productRepository.saveAndFlush(product);
             log.info("Product {} is updated", product.getId());
         }

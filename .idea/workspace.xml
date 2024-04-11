@@ -5,24 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8688f89b-92fc-4442-8cdd-84ebc164e5fa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand-service/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/capstoneproject/productservice/ProductServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/capstoneproject/productservice/controller/ProductController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/capstoneproject/productservice/dto/ProductRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/capstoneproject/productservice/dto/ProductResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/capstoneproject/productservice/model/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/capstoneproject/productservice/repository/ProductRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/capstoneproject/productservice/service/ProductService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/test/java/com/capstoneproject/productservice/ProductServiceApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand-service/src/main/java/com/capstoneproject/brandservice/BrandServiceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand-service/src/main/java/com/capstoneproject/brandservice/controller/BrandController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand-service/src/main/java/com/capstoneproject/brandservice/dto/BrandRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand-service/src/main/java/com/capstoneproject/brandservice/dto/BrandResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand-service/src/main/java/com/capstoneproject/brandservice/model/Brand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand-service/src/main/java/com/capstoneproject/brandservice/repository/BrandRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand-service/src/main/java/com/capstoneproject/brandservice/service/BrandService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/brand-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/capstoneproject/productservice/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/capstoneproject/productservice/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +54,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.BrandServiceApplication.executor": "Debug",
     "Spring Boot.ProductServiceApplication.executor": "Debug",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "17",
@@ -185,6 +179,19 @@
       <option name="launchJavascriptDebuger" value="false" />
       <method v="2" />
     </configuration>
+    <configuration name="BrandServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="brand-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.capstoneproject.brandservice.BrandServiceApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.capstoneproject.brandservice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ProductServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="product-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.capstoneproject.productservice.ProductServiceApplication" />
@@ -213,6 +220,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.BrandServiceApplication" />
         <item itemvalue="Spring Boot.ProductServiceApplication" />
         <item itemvalue="JUnit.ProductServiceApplicationTests" />
       </list>
@@ -240,7 +248,7 @@
       <workItem from="1712617539754" duration="16000" />
       <workItem from="1712617593304" duration="2999000" />
       <workItem from="1712719622750" duration="7523000" />
-      <workItem from="1712790490120" duration="2795000" />
+      <workItem from="1712790490120" duration="10940000" />
     </task>
     <servers />
   </component>
