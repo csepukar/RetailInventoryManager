@@ -16,6 +16,9 @@
     <modules>
         <module>product-service</module>
         <module>brand-service</module>
+        <module>category-service</module>
+        <module>item-service</module>
+        <module>supplier-service</module>
     </modules>
 
     <properties>
