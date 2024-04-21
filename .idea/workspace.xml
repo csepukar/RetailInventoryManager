@@ -5,34 +5,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8688f89b-92fc-4442-8cdd-84ebc164e5fa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/category-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/category-service/src/main/java/com/capstoneproject/categoryservice/CategoryServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/category-service/src/main/java/com/capstoneproject/categoryservice/controller/CategoryController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/category-service/src/main/java/com/capstoneproject/categoryservice/dto/CategoryRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/category-service/src/main/java/com/capstoneproject/categoryservice/dto/CategoryResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/category-service/src/main/java/com/capstoneproject/categoryservice/model/Category.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/category-service/src/main/java/com/capstoneproject/categoryservice/repository/CategoryRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/category-service/src/main/java/com/capstoneproject/categoryservice/service/CategoryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/category-service/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/item-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/item-service/src/main/java/com/capstoneproject/itemservice/ItemServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/item-service/src/main/java/com/capstoneproject/itemservice/model/Item.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/item-service/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/supplier-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/capstoneproject/supplierservice/SupplierServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/capstoneproject/supplierservice/controller/SupplierController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/capstoneproject/supplierservice/dto/BankRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/capstoneproject/supplierservice/dto/BankResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/capstoneproject/supplierservice/dto/SupplierRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/capstoneproject/supplierservice/dto/SupplierResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/capstoneproject/supplierservice/model/BankDetails.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/capstoneproject/supplierservice/model/Supplier.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/capstoneproject/supplierservice/repository/SupplierRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/capstoneproject/supplierservice/service/SupplierService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/supplier-service/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/item-service/src/main/java/com/capstoneproject/itemservice/controller/ItemController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/item-service/src/main/java/com/capstoneproject/itemservice/dto/ItemLotRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/item-service/src/main/java/com/capstoneproject/itemservice/dto/ItemLotResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/item-service/src/main/java/com/capstoneproject/itemservice/dto/ItemRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/item-service/src/main/java/com/capstoneproject/itemservice/dto/ItemResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/item-service/src/main/java/com/capstoneproject/itemservice/model/ItemLot.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/item-service/src/main/java/com/capstoneproject/itemservice/repository/ItemRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/item-service/src/main/java/com/capstoneproject/itemservice/service/ItemService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/capstoneproject/orderservice/OrderServiceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/capstoneproject/orderservice/controller/OrderController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/capstoneproject/orderservice/dto/OrderItemRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/capstoneproject/orderservice/dto/OrderItemResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/capstoneproject/orderservice/dto/OrderRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/capstoneproject/orderservice/dto/OrderResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/capstoneproject/orderservice/model/Order.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/capstoneproject/orderservice/model/OrderItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/capstoneproject/orderservice/repository/OrderRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/capstoneproject/orderservice/service/OrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/capstoneproject/transactionservice/TransactionServiceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/capstoneproject/transactionservice/controller/TransactionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/capstoneproject/transactionservice/dto/TransactionRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/capstoneproject/transactionservice/dto/TransactionResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/capstoneproject/transactionservice/model/Transaction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/capstoneproject/transactionservice/repository/TransactionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/capstoneproject/transactionservice/service/TransactionService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/item-service/src/main/java/com/capstoneproject/itemservice/model/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/item-service/src/main/java/com/capstoneproject/itemservice/model/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/item-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/item-service/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -63,33 +68,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Maven.microservices-container [clean,compile].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.BrandServiceApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.CategoryServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.ProductServiceApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.SupplierServiceApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Coding/springbootmicroservices/spring-boot-microservices&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.microservices-container [clean,compile].executor": "Run",
+    "Maven.microservices-container [clean,verify].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.BrandServiceApplication.executor": "Debug",
+    "Spring Boot.CategoryServiceApplication.executor": "Run",
+    "Spring Boot.ItemServiceApplication.executor": "Debug",
+    "Spring Boot.ProductServiceApplication.executor": "Debug",
+    "Spring Boot.SupplierServiceApplication.executor": "Debug",
+    "Spring Boot.TransactionServiceApplication.executor": "Debug",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "17",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Coding/springbootmicroservices/spring-boot-microservices",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.configurations.included.in.services": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Coding\springbootmicroservices\proj\microservices-container\product-service" />
@@ -98,6 +106,7 @@
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn clean compile" />
+      <command value="mvn clean verify" />
     </option>
   </component>
   <component name="RunDashboard">
@@ -109,7 +118,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.SupplierServiceApplication">
+  <component name="RunManager" selected="Spring Boot.TransactionServiceApplication">
     <configuration default="true" type="DjangoTestsConfigurationType">
       <module name="microservices-container" />
       <option name="ENV_FILES" value="" />
@@ -130,21 +139,6 @@
       <option name="USE_OPTIONS" value="false" />
       <option name="OPTIONS" value="" />
       <method v="2" />
-    </configuration>
-    <configuration name="ProductServiceApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="product-service" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.capstoneproject.productservice.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.capstoneproject.productservice" />
-      <option name="MAIN_CLASS_NAME" value="com.capstoneproject.productservice.ProductServiceApplicationTests" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
     </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="microservices-container" />
@@ -210,12 +204,12 @@
       <option name="launchJavascriptDebuger" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="BrandServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="brand-service" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.capstoneproject.brandservice.BrandServiceApplication" />
+    <configuration name="CategoryServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="category-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.capstoneproject.categoryservice.CategoryServiceApplication" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.capstoneproject.brandservice.*" />
+          <option name="PATTERN" value="com.capstoneproject.categoryservice.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -223,12 +217,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CategoryServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="category-service" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.capstoneproject.categoryservice.CategoryServiceApplication" />
+    <configuration name="ItemServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="item-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.capstoneproject.itemservice.ItemServiceApplication" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.capstoneproject.categoryservice.*" />
+          <option name="PATTERN" value="com.capstoneproject.itemservice.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -262,6 +256,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TransactionServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="transaction-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.capstoneproject.transactionservice.TransactionServiceApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.capstoneproject.transactionservice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="Tox" factoryName="Tox">
       <module name="microservices-container" />
       <option name="ENV_FILES" value="" />
@@ -277,11 +284,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.TransactionServiceApplication" />
+        <item itemvalue="Spring Boot.ItemServiceApplication" />
         <item itemvalue="Spring Boot.SupplierServiceApplication" />
         <item itemvalue="Spring Boot.ProductServiceApplication" />
         <item itemvalue="Spring Boot.CategoryServiceApplication" />
-        <item itemvalue="Spring Boot.BrandServiceApplication" />
-        <item itemvalue="JUnit.ProductServiceApplicationTests" />
       </list>
     </recent_temporary>
   </component>
