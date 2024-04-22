@@ -1,5 +1,6 @@
 package com.capstoneproject.orderservice.service;
 
+import com.capstoneproject.orderservice.client.InventoryClient;
 import com.capstoneproject.orderservice.dto.OrderItemRequest;
 import com.capstoneproject.orderservice.dto.OrderItemResponse;
 import com.capstoneproject.orderservice.dto.OrderRequest;
@@ -22,28 +23,35 @@ import java.util.Optional;
 @Slf4j
 public class OrderService {
     private final OrderRepository orderRepository;
-
+    private final InventoryClient inventoryClient;
 
     public void createOrder(OrderRequest orderRequest) {
         if(!orderRequest.getOrderItem().isEmpty() && orderRequest.getOrderItem() != null){
-            Order order = Order.builder()
-                    .userId(orderRequest.getUserId())
-                    .type(orderRequest.getType())
-                    .status(orderRequest.getStatus())
-                    .subTotal(orderRequest.getSubTotal())
-                    .itemDiscount(orderRequest.getItemDiscount())
-                    .tax(orderRequest.getTax())
-                    .shipping(orderRequest.getShipping())
-                    .total(orderRequest.getTotal())
-                    .promo(orderRequest.getPromo())
-                    .discount(orderRequest.getDiscount())
-                    .grandTotal(orderRequest.getGrandTotal())
-                    .orderItem(orderRequest.getOrderItem().stream().map(this::mapToOrderItem).toList())
-                    .build();
-            order.setCreatedBy("ram"); //need to implement login and name should come from userid
-            order.setCreatedAt(LocalDateTime.now());
-            orderRepository.save(order);
-            log.info("Order {} is saved", order.getId());
+            List<OrderItem> orderItemList = orderRequest.getOrderItem().stream().map(this::mapToOrderItem).toList();
+            boolean inStock = orderItemList.stream()
+                    .allMatch(orderItem -> inventoryClient.isInStock(orderItem.getItemId(), orderItem.getOrderedQuantity()));
+            if (inStock) {
+                Order order = Order.builder()
+                        .userId(orderRequest.getUserId())
+                        .type(orderRequest.getType())
+                        .status(orderRequest.getStatus())
+                        .subTotal(orderRequest.getSubTotal())
+                        .itemDiscount(orderRequest.getItemDiscount())
+                        .tax(orderRequest.getTax())
+                        .shipping(orderRequest.getShipping())
+                        .total(orderRequest.getTotal())
+                        .promo(orderRequest.getPromo())
+                        .discount(orderRequest.getDiscount())
+                        .grandTotal(orderRequest.getGrandTotal())
+                        .orderItem(orderItemList)
+                        .build();
+                order.setCreatedBy("ram"); //need to implement login and name should come from userid
+                order.setCreatedAt(LocalDateTime.now());
+                orderRepository.save(order);
+                log.info("Order {} is saved", order.getId());
+            } else {
+            throw new RuntimeException("Product not in stock");
+        }
         }
         log.info("Order not saved.. PLease Place some order");
 

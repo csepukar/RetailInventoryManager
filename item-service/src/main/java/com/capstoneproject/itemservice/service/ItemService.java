@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -53,6 +54,11 @@ public class ItemService {
     public ItemResponse getItemById(Long id) {
         Optional<Item> itemOpt = itemRepository.findById(id);
         return itemOpt.isPresent() ? itemOpt.map(this::mapToItemResponse).get() : null;
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isInStock(Long itemId, Integer quantity) {
+        return itemRepository.existsByIdAndQuantityIsGreaterThanEqual(itemId, quantity);
     }
 
     public void updateItem(Long id, ItemRequest itemRequest) {

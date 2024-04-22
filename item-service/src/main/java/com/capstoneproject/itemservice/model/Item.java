@@ -31,6 +31,7 @@ public class Item {
     private Long ean;
     private Boolean isActive;
     private Integer minRecomStock;
+    private Integer quantity;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String createdBy;
