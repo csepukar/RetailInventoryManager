@@ -1,6 +1,6 @@
 package com.capstoneproject.userservice.repository;
 
-import com.spring3.oauth.jwt.helpers.RefreshableCRUDRepository;
+import com.capstoneproject.userservice.helper.RefreshableCRUDRepository;
 import com.capstoneproject.userservice.model.User;
 import org.springframework.stereotype.Repository;
 
