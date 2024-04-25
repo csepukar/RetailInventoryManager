@@ -1,11 +1,14 @@
 package com.capstoneproject.userservice.controller;
 
-import com.capstoneproject.userservice.service.UserService;
+import com.capstoneproject.userservice.model.JwtRequest;
+import com.capstoneproject.userservice.model.JwtResponse;
+import com.capstoneproject.userservice.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

@@ -1,23 +1,22 @@
 package com.capstoneproject.userservice.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 
 @Entity
-@Table(name = "t_roles")
-@Getter
-@Setter
+@Data
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "t_role")
 public class Role {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column(nullable = false, length = 45)
-    @Enumerated(EnumType.STRING)
-    private RoleName name;
-
-    public Role() { }
-
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
+    private long id;
+    private String name;
 }

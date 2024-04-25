@@ -1,37 +1,29 @@
 package com.capstoneproject.userservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "t_user")
+@Data
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Getter
-@Setter
+@Table(name = "t_user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String userName;
-    private String email;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
+    private long id;
+    private String username;
+    @JsonIgnore
     private String password;
-    private String firstName;
-    private String lastName;
-
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "t_users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
     private Set<Role> roles = new HashSet<>();
-
-    public void addRole(Role role) {
-        this.roles.add(role);
-    }
 }
