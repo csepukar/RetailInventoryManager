@@ -1,72 +1,107 @@
 package com.capstoneproject.userservice.controller;
 
-import com.capstoneproject.userservice.model.JwtRequest;
-import com.capstoneproject.userservice.model.JwtResponse;
-import com.capstoneproject.userservice.model.User;
+import com.capstoneproject.userservice.dto.*;
+import com.capstoneproject.userservice.model.RefreshToken;
+import com.capstoneproject.userservice.service.JwtService;
+import com.capstoneproject.userservice.service.RefreshTokenService;
+import com.capstoneproject.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 
 @RestController
+@RequestMapping("/api/v1")
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    UserService userService;
 
     @Autowired
-    private JwtUtil jwtUtil;
+    private JwtService jwtService;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    RefreshTokenService refreshTokenService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<?> login(@RequestBody JwtRequest jwtRequest) throws Exception {
 
-        System.out.println(jwtRequest);
-        try{
-            this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.getUsername(), jwtRequest.getPassword()));
+    @Autowired
+    private  AuthenticationManager authenticationManager;
 
-        }catch (Exception e){
-            e.printStackTrace();
-            throw new Exception("Bad Cred!!");
+    @PostMapping(value = "/save")
+    public ResponseEntity saveUser(@RequestBody UserRequest userRequest) {
+        try {
+            UserResponse userResponse = userService.saveUser(userRequest);
+            return ResponseEntity.ok(userResponse);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity getAllUsers() {
+        try {
+            List<UserResponse> userResponses = userService.getAllUser();
+            return ResponseEntity.ok(userResponses);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @PostMapping("/profile")
+    public ResponseEntity<UserResponse> getUserProfile() {
+        try {
+            UserResponse userResponse = userService.getUser();
+            return ResponseEntity.ok().body(userResponse);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @GetMapping("/test")
+    public String test() {
+        try {
+            return "Welcome";
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    @PostMapping("/login")
+    public JwtResponseDTO AuthenticateAndGetToken(@RequestBody AuthRequestDTO authRequestDTO){
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword()));
+        if(authentication.isAuthenticated()){
+            RefreshToken refreshToken = refreshTokenService.createRefreshToken(authRequestDTO.getUsername());
+            return JwtResponseDTO.builder()
+                    .accessToken(jwtService.GenerateToken(authRequestDTO.getUsername()))
+                    .token(refreshToken.getToken()).build();
+
+        } else {
+            throw new UsernameNotFoundException("invalid user request..!!");
         }
 
-        //fine code
-
-        UserDetails user = this.userService.loadUserByUsername(jwtRequest.getUsername());
-        String token = this.jwtUtil.generateToken(user);
-        System.out.println("Token = "+token);
-
-        return ResponseEntity.ok(new JwtResponse(token));
-
-    }
-
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<?> register(@RequestBody User user){
-
-        return ResponseEntity.ok(userService.saveUser(user));
     }
 
 
-    //Only ADMIN role can access this
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    @RequestMapping(value = "/welcome", method = RequestMethod.GET)
-    public String test(){
-        return "Welcome with token !!";
+    @PostMapping("/refreshToken")
+    public JwtResponseDTO refreshToken(@RequestBody RefreshTokenRequestDTO refreshTokenRequestDTO){
+        return refreshTokenService.findByToken(refreshTokenRequestDTO.getToken())
+                .map(refreshTokenService::verifyExpiration)
+                .map(RefreshToken::getUserInfo)
+                .map(userInfo -> {
+                    String accessToken = jwtService.GenerateToken(userInfo.getUsername());
+                    return JwtResponseDTO.builder()
+                            .accessToken(accessToken)
+                            .token(refreshTokenRequestDTO.getToken()).build();
+                }).orElseThrow(() ->new RuntimeException("Refresh Token is not in DB..!!"));
     }
 
-
-    //Only USER role can access this
-    @PreAuthorize("hasAnyRole('USER')")
-    @RequestMapping(value = "/welcomeuser", method = RequestMethod.GET)
-    public String testuser(){
-        return "Welcome with token USER !!";
-    }
 }
