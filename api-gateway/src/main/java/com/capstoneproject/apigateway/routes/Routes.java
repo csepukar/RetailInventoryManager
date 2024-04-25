@@ -57,4 +57,10 @@ public class Routes {
                 .route(RequestPredicates.path("/api/brand/**"), http("http://localhost:61309"))
                 .build();
     }
+    @Bean
+    public RouterFunction<ServerResponse> userServiceRoute() {
+        return route("user-service")
+                .route(RequestPredicates.path("/api/user/**"), http("http://localhost:1109"))
+                .build();
+    }
 }
