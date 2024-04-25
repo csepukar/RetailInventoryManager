@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8688f89b-92fc-4442-8cdd-84ebc164e5fa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/org/capstoneproject/userservice/model/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/org/capstoneproject/userservice/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/test/java/org/capstoneproject/userservice/UserRepositoryTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/test/java/org/capstoneproject/userservice/UserRepositoryTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/test/java/org/capstoneproject/userservice/UserRepositoryTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -319,7 +315,7 @@
       <workItem from="1712790490120" duration="42783000" />
       <workItem from="1713827930572" duration="4282000" />
       <workItem from="1714007494120" duration="768000" />
-      <workItem from="1714009923924" duration="2666000" />
+      <workItem from="1714009923924" duration="3003000" />
     </task>
     <servers />
   </component>
