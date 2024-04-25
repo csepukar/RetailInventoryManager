@@ -1,6 +1,7 @@
 package org.capstoneproject.userservice;
 
 import org.capstoneproject.userservice.repository.UserRepository;
+import org.capstoneproject.userservice.model.User;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
