@@ -10,6 +10,7 @@ import com.capstoneproject.userservice.service.RefreshTokenService;
 import com.capstoneproject.userservice.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -89,10 +90,16 @@ public class UserController {
         return null;
     }
 
-
     @PostMapping(value = "/save")
     public ResponseEntity saveUser(@RequestBody UserRequest userRequest) {
         try {
+            // Check if the user exists by username
+            if (userService.existsByUsername(userRequest.getUsername())) {
+                return ResponseEntity.status(HttpStatus.CONFLICT)
+                        .body("User with username '" + userRequest.getUsername() + "' already exists.");
+            }
+
+            // Save the user
             UserResponse userResponse = userService.saveUser(userRequest);
             return ResponseEntity.ok(userResponse);
         } catch (Exception e) {

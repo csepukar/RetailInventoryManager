@@ -8,4 +8,5 @@ public interface UserService {
     UserResponse saveUser(UserRequest userRequest);
     UserResponse getUser();
     List<UserResponse> getAllUser();
+    boolean existsByUsername(String username);
 }

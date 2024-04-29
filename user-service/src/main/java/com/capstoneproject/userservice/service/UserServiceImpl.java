@@ -77,4 +77,8 @@ public class UserServiceImpl implements UserService {
         Type setOfDTOsType = new TypeToken<List<UserResponse>>(){}.getType();
         return modelMapper.map(users, setOfDTOsType);
     }
+
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
 }
