@@ -32,12 +32,18 @@ public class SecurityConfig {
     }
 
     @Bean
+    public JwtAuthFilter authenticationJwtTokenFilter() {
+        return new JwtAuthFilter();
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/save", "/api/v1/login", "/api/v1/refreshToken").permitAll()
+                .requestMatchers("/api/auth/save", "/api/auth/login", "/api/auth/refreshToken","/api/auth/logout").permitAll()
                 .and()
-                .authorizeHttpRequests().requestMatchers("/api/v1/**")
+                .authorizeHttpRequests().requestMatchers("/api/user/**")
                 .authenticated()
                 .and()
                 .sessionManagement()
@@ -45,7 +51,6 @@ public class SecurityConfig {
                 .and()
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class).build();
-
     }
 
     @Bean

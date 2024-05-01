@@ -63,4 +63,11 @@ public class Routes {
                 .route(RequestPredicates.path("/api/user/**"), http("http://localhost:1109"))
                 .build();
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> authServiceRoute() {
+        return route("user-service")
+                .route(RequestPredicates.path("/api/auth/**"), http("http://localhost:1109"))
+                .build();
+    }
 }

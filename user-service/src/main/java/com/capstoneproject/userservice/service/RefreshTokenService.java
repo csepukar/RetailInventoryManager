@@ -28,8 +28,6 @@ public class RefreshTokenService {
         return refreshTokenRepository.save(refreshToken);
     }
 
-
-
     public Optional<RefreshToken> findByToken(String token){
         return refreshTokenRepository.findByToken(token);
     }
@@ -40,6 +38,14 @@ public class RefreshTokenService {
             throw new RuntimeException(token.getToken() + " Refresh token is expired. Please make a new login..!");
         }
         return token;
+    }
+
+    public void deleteByUserId(long userId) {
+        refreshTokenRepository.deleteAllByUserInfo(userRepository.findFirstById(userId));
+    }
+
+    public void deleteAll() {
+        refreshTokenRepository.deleteAll();
     }
 
 }
