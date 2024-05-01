@@ -98,24 +98,4 @@ public class AuthController {
             throw new RuntimeException(e);
         }
     }
-
-    @GetMapping("/users")
-    public ResponseEntity getAllUsers() {
-        try {
-            List<UserResponse> userResponses = userService.getAllUser();
-            return ResponseEntity.ok(userResponses);
-        } catch (Exception e){
-            throw new RuntimeException(e);
-        }
-    }
-
-    @PostMapping("/profile")
-    public ResponseEntity<UserResponse> getUserProfile() {
-        try {
-            UserResponse userResponse = userService.getUser();
-            return ResponseEntity.ok().body(userResponse);
-        } catch (Exception e){
-            throw new RuntimeException(e);
-        }
-    }
 }
