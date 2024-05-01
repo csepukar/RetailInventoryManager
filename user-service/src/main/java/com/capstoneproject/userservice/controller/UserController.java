@@ -16,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -34,23 +35,32 @@ public class UserController {
 
     @Autowired
     private JwtService jwtService;
-    private InMemoryTokenBlacklist tokenBlacklist;
+    private final InMemoryTokenBlacklist tokenBlacklist = new InMemoryTokenBlacklist();
 
     @Autowired
     RefreshTokenService refreshTokenService;
 
     @PostMapping("/login")
-    public JwtResponseDTO AuthenticateAndGetToken(@RequestBody AuthRequestDTO authRequestDTO){
+    public ResponseEntity AuthenticateAndGetToken(@RequestBody AuthRequestDTO authRequestDTO){
+        // Check if the user is already authenticated
+        if (SecurityContextHolder.getContext().getAuthentication() != null &&
+                SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+            // User is already authenticated, return an HTTP response indicating this
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("User is already authenticated.");
+        }
+
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword()));
         if(authentication.isAuthenticated()){
             RefreshToken refreshToken = refreshTokenService.createRefreshToken(authRequestDTO.getUsername());
-            return JwtResponseDTO.builder()
+            return ResponseEntity.ok(JwtResponseDTO.builder()
                     .accessToken(jwtService.GenerateToken(authRequestDTO.getUsername()))
                     .token(refreshToken.getToken())
-                    .build();
+                    .build());
 
         } else {
-            throw new UsernameNotFoundException("invalid user request..!!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Delete unreachable statement");
         }
     }
 
@@ -70,9 +80,21 @@ public class UserController {
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {
         String token = extractTokenFromRequest(request);
+
+        // Find the user associated with the access token
+        String username = jwtService.extractUsername(token);
+
+        if (userService.existsByUsername(username)) {
+            refreshTokenService.deleteRefreshToken(username);
+        } else {
+            ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("User refresh token doesn't exist");
+        }
+
+        // this is in memory list, try to implement redis cache if time
         tokenBlacklist.addToBlacklist(token);
 
-        // Clear any session-related data if necessary
+        //TODO: Clear any session-related data if necessary
         return ResponseEntity.ok("Logged out successfully");
     }
 
