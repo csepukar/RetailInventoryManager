@@ -1,10 +1,12 @@
 package com.capstoneproject.userservice.service;
 
 import com.capstoneproject.userservice.model.RefreshToken;
+import com.capstoneproject.userservice.model.User;
 import com.capstoneproject.userservice.repository.RefreshTokenRepository;
 import com.capstoneproject.userservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -19,7 +21,14 @@ public class RefreshTokenService {
     @Autowired
     UserRepository userRepository;
 
+    @Transactional
     public RefreshToken createRefreshToken(String username){
+
+        // Delete previous token if any
+        User user = userRepository.findByUsername(username);
+
+        deleteByUserId(user.getId());
+        // Continue rest of the process
         RefreshToken refreshToken = RefreshToken.builder()
                 .userInfo(userRepository.findByUsername(username))
                 .token(UUID.randomUUID().toString())
@@ -41,7 +50,12 @@ public class RefreshTokenService {
     }
 
     public void deleteByUserId(long userId) {
-        refreshTokenRepository.deleteAllByUserInfo(userRepository.findFirstById(userId));
+        User user = userRepository.findFirstById(userId);
+        if (user != null) {
+            refreshTokenRepository.deleteAllByUserId(user.getId());
+        } else {
+            // Handle the case where the user with the given ID does not exist
+        }
     }
 
     public void deleteAll() {
