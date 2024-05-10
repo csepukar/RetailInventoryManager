@@ -41,7 +41,7 @@ public class CategoryController {
 
     @GetMapping("/tree")
     @ResponseStatus(HttpStatus.OK)
-    public CategoryResponse getCategoriesTree(){
+    public List<CategoryResponse> getCategoriesTree(){
         return categoryService.getAllTree();
     }
 }

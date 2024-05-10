@@ -79,9 +79,12 @@ public class CategoryService {
         });
     }
 
-    public CategoryResponse getAllTree() {
+    public List<CategoryResponse> getAllTree() {
         Category category = categoryRepository.findByIsRootNode(true);
-        return recursiveList(category);
+        CategoryResponse result = recursiveList(category);
+        List<CategoryResponse> categoryList = new ArrayList<>();
+        categoryList.add(result);
+        return categoryList;
     }
 
     private CategoryResponse recursiveList(Category category){
