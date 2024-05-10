@@ -39,4 +39,9 @@ public class TransactionController {
         return transactionService.getTransactionById(id);
     }
 
+    @PostMapping("/deleteAll")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteAllTransaction() {
+        transactionService.deleteAllTransactions();
+    }
 }

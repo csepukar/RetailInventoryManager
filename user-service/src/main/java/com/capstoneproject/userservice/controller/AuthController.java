@@ -43,7 +43,7 @@ public class AuthController {
             RefreshToken refreshToken = refreshTokenService.createRefreshToken(authRequestDTO.getUsername());
             return ResponseEntity.ok(JwtResponseDTO.builder()
                     .accessToken(jwtService.GenerateToken(authRequestDTO.getUsername()))
-                    .token(refreshToken.getToken())
+                    .refreshToken(refreshToken.getToken())
                     .build());
 
         } else {
@@ -61,7 +61,7 @@ public class AuthController {
                     String accessToken = jwtService.GenerateToken(userInfo.getUsername());
                     return JwtResponseDTO.builder()
                             .accessToken(accessToken)
-                            .token(refreshTokenRequestDTO.getToken()).build();
+                            .refreshToken(refreshTokenRequestDTO.getToken()).build();
                 }).orElseThrow(() ->new RuntimeException("Refresh Token is not in DB..!!"));
     }
 
