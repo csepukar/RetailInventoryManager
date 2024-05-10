@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.time.format.DateTimeFormatter;
 
 @Service
 @Slf4j
@@ -30,12 +30,21 @@ public class TransactionService {
                 .mode(transactionRequest.getMode())
                 .status(transactionRequest.getStatus())
                 .content(transactionRequest.getContent())
+                .createdAt(transactionRequest.getCreatedAt())
+                .updatedAt(transactionRequest.getUpdatedAt())
                 .build();
-        transaction.setCreatedBy("ram"); //need to implement login and name should come from userid
-        transaction.setCreatedAt(LocalDateTime.now());
+
+        // Setting createdBy based on userId
+        transaction.setCreatedBy(getUserNameFromUserId(transactionRequest.getUserId()));
+
         transactionRepository.save(transaction);
         log.info("Order {} is saved", transaction.getId());
     }
+
+    private String getUserNameFromUserId(Long userId) {
+        return "ram";
+    }
+
 
     public List<TransactionResponse> getAllTransactions() {
         List<Transaction> categories = transactionRepository.findAll();
@@ -46,6 +55,10 @@ public class TransactionService {
     public TransactionResponse getTransactionById(Long id) {
         Optional<Transaction> optionalTransaction = transactionRepository.findById(id);
         return optionalTransaction.isPresent() ? optionalTransaction.map(this::mapToTransactionResponse).get() : null;
+    }
+
+    public void deleteAllTransactions() {
+        transactionRepository.deleteAll();
     }
 
     public void updateTransaction(Long id, TransactionRequest transactionRequest) {
@@ -81,6 +94,10 @@ public class TransactionService {
                 .mode(transaction.getMode())
                 .status(transaction.getStatus())
                 .content(transaction.getContent())
+                .createdAt(transaction.getCreatedAt())
+                .updatedAt(transaction.getUpdatedAt())
+                .createdBy(transaction.getCreatedBy())
+                .updatedBy(transaction.getUpdatedBy())
                 .build();
     }
 }
