@@ -5,18 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductResponse {
+public class ProductCategoryResponse {
     private Long id;
-    private String title;
-    private String summary;
-    private String type;
-    private String content;
-    private List<ProductCategoryResponse> productCategoryLink;
-
+    private Long categoryId;
+    private Long productId;
 }
