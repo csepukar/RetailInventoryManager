@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "t_product")
@@ -24,4 +25,6 @@ public class Product {
     private String createdBy;
     private String updatedBy;
     private String content;         // store the additional details of the product: only for age +18, card needed to show,etc
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductCategory> productCategoryLink;
 }

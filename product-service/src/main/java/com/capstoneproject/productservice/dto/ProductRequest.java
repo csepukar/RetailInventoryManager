@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -14,4 +16,5 @@ public class ProductRequest {
     private String summary;
     private String type;
     private String content;
+    private List<ProductCategoryRequest> productCategoryLink;
 }
