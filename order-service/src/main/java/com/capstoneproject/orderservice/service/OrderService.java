@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 
 @Service
 @AllArgsConstructor
@@ -26,11 +28,11 @@ public class OrderService {
     private final InventoryClient inventoryClient;
 
     public void createOrder(OrderRequest orderRequest) {
-        if(!orderRequest.getOrderItem().isEmpty() && orderRequest.getOrderItem() != null){
-            List<OrderItem> orderItemList = orderRequest.getOrderItem().stream().map(this::mapToOrderItem).toList();
-            boolean inStock = orderItemList.stream()
-                    .allMatch(orderItem -> inventoryClient.isInStock(orderItem.getItemId(), orderItem.getOrderedQuantity()));
+        if (!orderRequest.getOrderItem().isEmpty()) {
+            boolean inStock = true; // Check if all items are in stock
+
             if (inStock) {
+                // Create the Order object
                 Order order = Order.builder()
                         .userId(orderRequest.getUserId())
                         .type(orderRequest.getType())
@@ -43,18 +45,27 @@ public class OrderService {
                         .promo(orderRequest.getPromo())
                         .discount(orderRequest.getDiscount())
                         .grandTotal(orderRequest.getGrandTotal())
-                        .orderItem(orderItemList)
                         .build();
-                order.setCreatedBy("ram"); //need to implement login and name should come from userid
+
+                order.setCreatedBy("System"); // Set the creator (need to implement login)
                 order.setCreatedAt(LocalDateTime.now());
+
+                List<OrderItem> orderItemList = orderRequest.getOrderItem().stream()
+                        .map(item -> mapToOrderItem(item, order))
+                        .toList();
+
+                // Set the OrderItem list to the Order object
+                order.setOrderItem(orderItemList);
+
+                // Save the Order object
                 orderRepository.save(order);
                 log.info("Order {} is saved", order.getId());
             } else {
-            throw new RuntimeException("Product not in stock");
+                throw new RuntimeException("Product not in stock");
+            }
+        } else {
+            log.info("Order not saved. Please place some order.");
         }
-        }
-        log.info("Order not saved.. PLease Place some order");
-
     }
 
     public List<OrderResponse> getAllOrders() {
@@ -68,36 +79,11 @@ public class OrderService {
         return orderOpt.isPresent() ? orderOpt.map(this::mapToOrderResponse).get() : null;
     }
 
-    public void updateOrder(Long id, OrderRequest orderRequest) {
-        Optional<Order> orderOpt = orderRepository.findById(id);
-        if (orderOpt.isPresent()) {
-            Order order = orderOpt.map(opt ->
-                    Order.builder()
-                            .id(opt.getId())
-                            .userId(Optional.ofNullable(orderRequest.getUserId()).orElse(opt.getUserId()))
-                            .type(Optional.ofNullable(orderRequest.getType()).orElse(opt.getType()))
-                            .status(Optional.ofNullable(orderRequest.getStatus()).orElse(opt.getStatus()))
-                            .subTotal(Optional.ofNullable(orderRequest.getSubTotal()).orElse(opt.getSubTotal()))
-                            .itemDiscount(Optional.ofNullable(orderRequest.getItemDiscount()).orElse(opt.getItemDiscount()))
-                            .tax(Optional.ofNullable(orderRequest.getTax()).orElse(opt.getTax()))
-                            .shipping(Optional.ofNullable(orderRequest.getShipping()).orElse(opt.getShipping()))
-                            .total(Optional.ofNullable(orderRequest.getTotal()).orElse(opt.getTotal()))
-                            .promo(Optional.ofNullable(orderRequest.getPromo()).orElse(opt.getPromo()))
-                            .discount(Optional.ofNullable(orderRequest.getDiscount()).orElse(opt.getDiscount()))
-                            .grandTotal(Optional.ofNullable(orderRequest.getGrandTotal()).orElse(opt.getGrandTotal()))
-                            .orderItem(Optional.ofNullable(orderRequest.getOrderItem().stream().map(this::mapToOrderItem).toList()).orElse(opt.getOrderItem()))
-                            .createdBy(opt.getCreatedBy())
-                            .updatedBy("shyam") //change the name with the login credential
-                            .createdAt(opt.getCreatedAt())
-                            .updatedAt(LocalDateTime.now())
-                            .build()
-            ).get();
-            orderRepository.saveAndFlush(order);
-            log.info("Order {} is updated", order.getId());
-        }
-    }
-
     private OrderResponse mapToOrderResponse(Order order) {
+        List<OrderItemResponse> orderItemResponses = order.getOrderItem() != null ?
+                order.getOrderItem().stream().map(this::mapToOrderItemResponse).toList() :
+                Collections.emptyList();
+
         return OrderResponse.builder()
                 .id(order.getId())
                 .userId(order.getUserId())
@@ -111,7 +97,12 @@ public class OrderService {
                 .promo(order.getPromo())
                 .discount(order.getDiscount())
                 .grandTotal(order.getGrandTotal())
-                .orderItem(order.getOrderItem().stream().map(this::mapToOrderItemResponse).toList())
+                .createdAt(order.getCreatedAt())
+                .updatedAt(order.getUpdatedAt())
+                .createdBy(order.getCreatedBy())
+                .updatedBy(order.getUpdatedBy())
+                .content(order.getContent())
+                .orderItem(orderItemResponses)
                 .build();
     }
 
@@ -127,16 +118,62 @@ public class OrderService {
                 .content(orderItem.getContent())
                 .build();
     }
-    private OrderItem mapToOrderItem(OrderItemRequest orderItemRequest){
-        return  OrderItem.builder()
-                .itemId(orderItemRequest.getItemId())
-                .sku(orderItemRequest.getSku())
-                .price(orderItemRequest.getPrice())
-                .discount(orderItemRequest.getDiscount())
-                .orderedQuantity(orderItemRequest.getOrderedQuantity())
-                .arrivedQuantity(orderItemRequest.getArrivedQuantity())
-                .content(orderItemRequest.getContent())
-                .build();
+
+    public OrderItem mapToOrderItem(OrderItemRequest orderItemRequest, Order order) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItemId(orderItemRequest.getItemId());
+        orderItem.setOrder(order);
+        orderItem.setSku(orderItemRequest.getSku());
+        orderItem.setPrice(orderItemRequest.getPrice());
+        orderItem.setDiscount(orderItemRequest.getDiscount());
+        orderItem.setOrderedQuantity(orderItemRequest.getOrderedQuantity());
+        orderItem.setArrivedQuantity(orderItemRequest.getArrivedQuantity());
+        orderItem.setCreatedAt(LocalDateTime.now());
+        orderItem.setUpdatedAt(LocalDateTime.now());
+        orderItem.setCreatedBy("System");
+        orderItem.setUpdatedBy("System");
+        orderItem.setContent(orderItemRequest.getContent());
+        return orderItem;
+    }
+
+    public void updateOrder(Long id, OrderRequest orderRequest) {
+        Optional<Order> orderOpt = orderRepository.findById(id);
+        if (orderOpt.isPresent()) {
+            Order existingOrder = orderOpt.get();
+
+            Order updatedOrder = Order.builder()
+                    .id(existingOrder.getId())
+                    .userId(Optional.ofNullable(orderRequest.getUserId()).orElse(existingOrder.getUserId()))
+                    .type(Optional.ofNullable(orderRequest.getType()).orElse(existingOrder.getType()))
+                    .status(Optional.ofNullable(orderRequest.getStatus()).orElse(existingOrder.getStatus()))
+                    .subTotal(Optional.ofNullable(orderRequest.getSubTotal()).orElse(existingOrder.getSubTotal()))
+                    .itemDiscount(Optional.ofNullable(orderRequest.getItemDiscount()).orElse(existingOrder.getItemDiscount()))
+                    .tax(Optional.ofNullable(orderRequest.getTax()).orElse(existingOrder.getTax()))
+                    .shipping(Optional.ofNullable(orderRequest.getShipping()).orElse(existingOrder.getShipping()))
+                    .total(Optional.ofNullable(orderRequest.getTotal()).orElse(existingOrder.getTotal()))
+                    .promo(Optional.ofNullable(orderRequest.getPromo()).orElse(existingOrder.getPromo()))
+                    .discount(Optional.ofNullable(orderRequest.getDiscount()).orElse(existingOrder.getDiscount()))
+                    .grandTotal(Optional.ofNullable(orderRequest.getGrandTotal()).orElse(existingOrder.getGrandTotal()))
+                    .orderItem(mapToOrderItems(orderRequest.getOrderItem(), existingOrder))
+                    .createdBy(existingOrder.getCreatedBy())
+                    .updatedBy("System")
+                    .createdAt(existingOrder.getCreatedAt())
+                    .updatedAt(LocalDateTime.now())
+                    .build();
+
+            orderRepository.saveAndFlush(updatedOrder);
+            log.info("Order {} is updated", updatedOrder.getId());
+        }
+    }
+
+    private List<OrderItem> mapToOrderItems(List<OrderItemRequest> orderItemRequests, Order existingOrder) {
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (OrderItemRequest orderItemRequest : orderItemRequests) {
+            // Map each OrderItemRequest to OrderItem
+            OrderItem orderItem = mapToOrderItem(orderItemRequest, existingOrder);
+            orderItems.add(orderItem);
+        }
+        return orderItems;
     }
 }
 
