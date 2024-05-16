@@ -33,6 +33,6 @@ public class Order {
     private String createdBy;
     private String updatedBy;
     private String content;
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "order", cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private List<OrderItem> orderItem;
 }

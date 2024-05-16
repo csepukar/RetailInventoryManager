@@ -16,7 +16,7 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long itemId;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name = "order_id")
     private Order order;
     private String sku;
