@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +48,12 @@ public class ItemService {
 
     public List<ItemResponse> getAllItems() {
         List<Item> items = itemRepository.findAll();
+
+        return items.stream().map(this::mapToItemResponse).toList();
+    }
+
+    public List<ItemResponse> getAllActiveItems() {
+        List<Item> items = itemRepository.getAllByIsActiveTrue();
 
         return items.stream().map(this::mapToItemResponse).toList();
     }

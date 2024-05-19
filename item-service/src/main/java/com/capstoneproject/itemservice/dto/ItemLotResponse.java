@@ -18,5 +18,5 @@ public class ItemLotResponse {
     private short defective;
     private short defectiveCustReturned;
     private LocalDateTime expireDate;
-    private ItemLotResponse item;
+    private ItemResponse item;
 }

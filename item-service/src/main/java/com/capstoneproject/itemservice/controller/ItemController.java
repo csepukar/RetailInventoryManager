@@ -25,6 +25,12 @@ public class ItemController {
         return itemService.getAllItems();
     }
 
+    @GetMapping("/allActiveItems")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ItemResponse> getAllActiveItems() {
+        return itemService.getAllActiveItems();
+    }
+
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void updateItem(@PathVariable Long id, @RequestBody ItemRequest itemRequest) {
