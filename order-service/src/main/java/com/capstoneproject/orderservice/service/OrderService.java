@@ -1,10 +1,7 @@
 package com.capstoneproject.orderservice.service;
 
 import com.capstoneproject.orderservice.client.InventoryClient;
-import com.capstoneproject.orderservice.dto.OrderItemRequest;
-import com.capstoneproject.orderservice.dto.OrderItemResponse;
-import com.capstoneproject.orderservice.dto.OrderRequest;
-import com.capstoneproject.orderservice.dto.OrderResponse;
+import com.capstoneproject.orderservice.dto.*;
 import com.capstoneproject.orderservice.model.Order;
 import com.capstoneproject.orderservice.model.OrderItem;
 import com.capstoneproject.orderservice.repository.OrderRepository;
@@ -74,6 +71,16 @@ public class OrderService {
         return orders.stream().map(this::mapToOrderResponse).toList();
     }
 
+    public List<OrderResponse> getAllOrdersByUserIdAndType(OrderRequest orderRequest) {
+        List<Order> orders = orderRepository.findAllByUserIdAndTypeAndStatus(orderRequest.getUserId(),orderRequest.getType(),orderRequest.getStatus());
+
+        return orders.stream().map(this::mapToOrderResponse).toList();
+    }
+    public List<OrderResponse> getAllByStatus(OrderRequest orderRequest) {
+        List<Order> orders = orderRepository.findAllByStatus(orderRequest.getStatus());
+        return orders.stream().map(this::mapToOrderResponse).toList();
+    }
+
     public OrderResponse getOrderById(Long id) {
         Optional<Order> orderOpt = orderRepository.findById(id);
         return orderOpt.isPresent() ? orderOpt.map(this::mapToOrderResponse).get() : null;
@@ -140,29 +147,55 @@ public class OrderService {
         Optional<Order> orderOpt = orderRepository.findById(id);
         if (orderOpt.isPresent()) {
             Order existingOrder = orderOpt.get();
+            existingOrder.setStatus(1);
+            orderRepository.saveAndFlush(existingOrder);
+            orderRequest.setStatus(3);
+            createOrder(orderRequest);
 
-            Order updatedOrder = Order.builder()
-                    .id(existingOrder.getId())
-                    .userId(Optional.ofNullable(orderRequest.getUserId()).orElse(existingOrder.getUserId()))
-                    .type(Optional.ofNullable(orderRequest.getType()).orElse(existingOrder.getType()))
-                    .status(Optional.ofNullable(orderRequest.getStatus()).orElse(existingOrder.getStatus()))
-                    .subTotal(Optional.ofNullable(orderRequest.getSubTotal()).orElse(existingOrder.getSubTotal()))
-                    .itemDiscount(Optional.ofNullable(orderRequest.getItemDiscount()).orElse(existingOrder.getItemDiscount()))
-                    .tax(Optional.ofNullable(orderRequest.getTax()).orElse(existingOrder.getTax()))
-                    .shipping(Optional.ofNullable(orderRequest.getShipping()).orElse(existingOrder.getShipping()))
-                    .total(Optional.ofNullable(orderRequest.getTotal()).orElse(existingOrder.getTotal()))
-                    .promo(Optional.ofNullable(orderRequest.getPromo()).orElse(existingOrder.getPromo()))
-                    .discount(Optional.ofNullable(orderRequest.getDiscount()).orElse(existingOrder.getDiscount()))
-                    .grandTotal(Optional.ofNullable(orderRequest.getGrandTotal()).orElse(existingOrder.getGrandTotal()))
-                    .orderItem(mapToOrderItems(orderRequest.getOrderItem(), existingOrder))
-                    .createdBy(existingOrder.getCreatedBy())
-                    .updatedBy("System")
-                    .createdAt(existingOrder.getCreatedAt())
-                    .updatedAt(LocalDateTime.now())
-                    .build();
+            List<ItemRequest> itemRequests = orderRequest.getOrderItem().stream().map(opt -> {
+                ItemLotRequest tempItemLotRequest =  ItemLotRequest.builder()
+                        .available( opt.getArrivedQuantity())
+                        .defective((short) 0)
+                        .returnableItem(true)
+                        .defectiveCustReturned((short) 0)
+                        .quantity(opt.getArrivedQuantity())
+                        .sold((short) 0)
+                        .build();
+                List<ItemLotRequest> tempItemLotRequests = new ArrayList<>();
+                tempItemLotRequests.add(tempItemLotRequest);
+                return ItemRequest.builder()
+                        .id(opt.getItemId())
+                        .itemLots(tempItemLotRequests)
+                            .build();
+                            }
+            ).toList();
 
-            orderRepository.saveAndFlush(updatedOrder);
-            log.info("Order {} is updated", updatedOrder.getId());
+
+            for (ItemRequest itemRequest : itemRequests) {
+                inventoryClient.createItemLot(itemRequest.getId(),itemRequest);
+            }
+
+//            Order updatedOrder = Order.builder()
+//                    .id(existingOrder.getId())
+//                    .userId(Optional.ofNullable(orderRequest.getUserId()).orElse(existingOrder.getUserId()))
+//                    .type(Optional.ofNullable(orderRequest.getType()).orElse(existingOrder.getType()))
+//                    .status(Optional.ofNullable(orderRequest.getStatus()).orElse(existingOrder.getStatus()))
+//                    .subTotal(Optional.ofNullable(orderRequest.getSubTotal()).orElse(existingOrder.getSubTotal()))
+//                    .itemDiscount(Optional.ofNullable(orderRequest.getItemDiscount()).orElse(existingOrder.getItemDiscount()))
+//                    .tax(Optional.ofNullable(orderRequest.getTax()).orElse(existingOrder.getTax()))
+//                    .shipping(Optional.ofNullable(orderRequest.getShipping()).orElse(existingOrder.getShipping()))
+//                    .total(Optional.ofNullable(orderRequest.getTotal()).orElse(existingOrder.getTotal()))
+//                    .promo(Optional.ofNullable(orderRequest.getPromo()).orElse(existingOrder.getPromo()))
+//                    .discount(Optional.ofNullable(orderRequest.getDiscount()).orElse(existingOrder.getDiscount()))
+//                    .grandTotal(Optional.ofNullable(orderRequest.getGrandTotal()).orElse(existingOrder.getGrandTotal()))
+//                    .orderItem(mapToOrderItems(orderRequest.getOrderItem(), existingOrder))
+//                    .createdBy(existingOrder.getCreatedBy())
+//                    .createdAt(existingOrder.getCreatedAt())
+//                    .updatedBy("System")
+//                    .updatedAt(LocalDateTime.now())
+//                    .build();
+//
+//            log.info("Order {} is updated", updatedOrder.getId());
         }
     }
 
