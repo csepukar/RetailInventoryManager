@@ -19,6 +19,12 @@ public class ItemController {
         itemService.createItem(itemRequest);
     }
 
+    @PutMapping("/createItemLot/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createItemLot(@PathVariable Long id, @RequestBody ItemRequest itemRequest){
+        itemService.createItemLot(id, itemRequest);
+    }
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ItemResponse> getAllItems() {

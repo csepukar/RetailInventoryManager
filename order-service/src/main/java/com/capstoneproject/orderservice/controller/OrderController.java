@@ -25,6 +25,24 @@ public class OrderController {
         return orderService.getAllOrders();
     }
 
+    @GetMapping("/getBySupplier")
+    @ResponseStatus(HttpStatus.OK)
+    public  List<OrderResponse> getOrdersBySupplier(@RequestParam("userId") Long userId,@RequestParam("type") int type,@RequestParam("status") int status){
+        OrderRequest orderRequest = new OrderRequest();
+        orderRequest.setUserId(userId);
+        orderRequest.setType(type);
+        orderRequest.setStatus(status);
+        return orderService.getAllOrdersByUserIdAndType(orderRequest);
+    }
+
+    @GetMapping("/getAllByStatus")
+    @ResponseStatus(HttpStatus.OK)
+    public  List<OrderResponse> getAllByStatus(@RequestParam("status") int status){
+        OrderRequest orderRequest = new OrderRequest();
+        orderRequest.setStatus(status);
+        return orderService.getAllByStatus(orderRequest);
+    }
+
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void updateOrder(@PathVariable Long id, @RequestBody OrderRequest orderRequest) {

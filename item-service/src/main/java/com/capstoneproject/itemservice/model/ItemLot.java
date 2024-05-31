@@ -26,8 +26,8 @@ public class ItemLot {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "item_id")
     private Item item;
-    private long createdBy;
-    private Long updatedBy;
+    private String createdBy;
+    private String updatedBy;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

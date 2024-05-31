@@ -1,12 +1,11 @@
 package com.capstoneproject.orderservice.client;
 
+import com.capstoneproject.orderservice.dto.ItemRequest;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-@FeignClient(value = "inventory", url = "${inventory.url}")  //
+@FeignClient(value = "item", url = "${inventory.url}")  //
 public interface InventoryClient {
-    @RequestMapping(method = RequestMethod.GET, value = "/api/inventory")
-    boolean isInStock(@RequestParam Long itemId, @RequestParam Integer quantity);
+    @RequestMapping(method = RequestMethod.PUT, value = "/api/item/createItemLot/{id}")
+    void createItemLot(@PathVariable Long id, @RequestBody ItemRequest itemRequest);
 }
